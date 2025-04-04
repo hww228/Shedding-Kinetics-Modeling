@@ -1,0 +1,4 @@
+shedding.data <- data.frame(subjects = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2), 
+                            day = c(5,6,7,8,9,10,11,12,14,15,16,5,6,7,8,9,10,11,12,14,15,16,16,17,19,21,24,16,17,19,21,24),
+                            value = c(24.64, 19.83, 28.05, 22.25, 25.3, NA, NA, 27.22, NA, NA, NA, NA, NA, 30.04, NA, NA, NA, NA, NA, 39.51, NA, NA, NA, 36.27, NA, NA, 34.29, 33.45, NA, NA, NA, 37.66, 37.75, 35.54, 33.29, NA, 28.2, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 30.45, NA, NA, NA)
+censorlimit = 2 ##log10 scale limit of quantification
