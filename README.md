@@ -16,7 +16,7 @@ $c_0$ is the RNA concentration (on a log scale) at time $t = 0$
 
 $a_0$ is the decay rate.
 
-We assume that $$\text{RNA}_i \sim \mathcal{N}\!\Biggl(\mu_{\text{RNA}}(t_i),\, \sigma^2\Biggr)$$
+We assume that $$\text{RNA}_i \sim \mathcal{N}\!\Biggl(\mu_{\text{RNA}}(t_i),\,\sigma^2\Biggr)$$
 
 2.  Transformation to ct_value:
 
