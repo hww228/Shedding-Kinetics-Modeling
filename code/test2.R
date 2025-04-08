@@ -1,7 +1,7 @@
 #data for wang2020fecal
 library(readxl)
 library(dplyr)
-raw_data <- read_excel("./data/B_data.xlsx") #You can also change to A: A data.xlsx → Corresponds to ORF1ab gene measurements; B data.xlsx → Corresponds to N gene measurements
+raw_data <- read_excel("./data/B_data.xlsx") #You can also change to A 
 shedding.data.wang <- raw_data %>%
   rename(subject = patients, 
          ct_value = ctvalue) %>%

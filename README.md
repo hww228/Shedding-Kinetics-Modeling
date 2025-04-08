@@ -10,6 +10,8 @@ The model assumes that the RNA concentration on the log$_{10}$ scale decays expo
 
 
 ## Repository Structure
+-   data/ : Contains data **wang2020fecal**. A data.xlsx → Corresponds to ORF1ab gene measurements; B data.xlsx → Corresponds to N gene measurements
+
 -   code/reproducibility.R: Contains code to reproduce case 1: Single Subject without Censored Data 
 -   code/test.R: Contains code for testing data **kim2020viral**: Single Subject without Censored ct_value. 
 -   code/test2.R: Contains code for testing data **wang2020fecal**: Treated as Single Subject without Censored ct_value. 
