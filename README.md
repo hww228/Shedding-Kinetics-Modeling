@@ -10,7 +10,9 @@ The model assumes that the RNA concentration on the log$_{10}$ scale decays expo
 
 
 ## Repository Structure
-
+-   code/reproducibility.R: Contains code to reproduce case 1: Single Subject without Censored Data 
+-   code/test.R: Contains code for testing data **kim2020viral**: Single Subject without Censored ct_value. 
+-   code/test2.R: Contains code for testing data **wang2020fecal**: Treated as Single Subject without Censored ct_value. 
 -   models/expon1ct.stan: Contains the Stan model with ct_value.
 
 ## Prerequisites
