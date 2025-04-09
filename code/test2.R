@@ -23,7 +23,7 @@ data_one_noncensored_2
 library(rstan)
 fit_one_noncensored_2 <- stan(
   file = "./models/expon1ct.stan",  
-  data = data_one_noncensored,   
+  data = data_one_noncensored_2,   
   chains = 4,            
   warmup = 1000,          
   iter = 2000,        
@@ -50,33 +50,59 @@ RNA_c_2 <- as.numeric(beta0_hat_2) + as.numeric(beta1_hat_2) * data_one_noncenso
 
 censorlimit_RNA_2 = as.numeric(beta0_hat_2) + as.numeric(beta1_hat_2) * censorlimit_2
 #graph
+# 
+# plot(-1,-1,xlim=c(0,30),ylim=c(-5,10),col="white",
+#      xlab="Days after Symptom Onset",ylab="Genome Copies per mL",main="All Subjects Treated As One in Wang",
+#      yaxt="n",cex.axis=1.5,cex.lab=1.5,cex.main=2);
+# # lines(x=c(0,30),y=c(censorlimit,censorlimit),lty=3,col="black");
+# lines(x = c(0, 30), y = rep(censorlimit_RNA_2, 2), lty = 3, col = "black")
+# points(data_one_noncensored_2$t,RNA_c_2,col="black",cex=1.5,pch=16)
+# graph.resp.1(color="black",model="exp")
+# legend("topright", legend=c("Quantifiable","Negative","Median","95% Credible Interval"), lty=c(NA,NA,1,3), pch=c(16,1,NA,NA), lwd=2, pt.cex=2)
+# text(4,-3.5,"Limit of Quantification")
+# ticks.log(2,cex.axis=1)
+# 
+# 
+# par(mfrow = c(2, 1)) 
 
-plot(-1,-1,xlim=c(0,30),ylim=c(-5,10),col="white",
-     xlab="Days after Symptom Onset",ylab="Genome Copies per mL",main="All Subjects Treated As One in Wang",
-     yaxt="n",cex.axis=1.5,cex.lab=1.5,cex.main=2);
-# lines(x=c(0,30),y=c(censorlimit,censorlimit),lty=3,col="black");
-lines(x = c(0, 30), y = rep(censorlimit_RNA_2, 2), lty = 3, col = "black")
-points(data_one_noncensored_2$t,RNA_c_2,col="black",cex=1.5,pch=16)
-graph.resp.1(color="black",model="exp")
-legend("topright", legend=c("Quantifiable","Negative","Median","95% Credible Interval"), lty=c(NA,NA,1,3), pch=c(16,1,NA,NA), lwd=2, pt.cex=2)
-text(4,-3.5,"Limit of Quantification")
-ticks.log(2,cex.axis=1)
+#customize the plot function;
+graph.resp <- function(color){
+  x <- seq(from=5,to=50,by=0.2);
+  y <- array(NA,dim=c(length(x),3));
+  for(k in 1:length(x)){
+    y[k,] <- quant.resp(x[k]);
+  }
+  lines(x,y[,1],col=color,lty=3,lwd=2);
+  lines(x,y[,2],col=color,lty=1,lwd=2);
+  lines(x,y[,3],col=color,lty=3,lwd=2);
+}
 
+quant.resp <- function(t){
+  tmp <- vir_exponential(t,a0_2,c0_2,beta0_2,beta1_2);
+  tmp <- as.numeric(na.omit(tmp));
+  return(quantile(tmp,probs=c(0.025,0.5,0.975)));
+}
 
-par(mfrow = c(2, 1)) 
+vir_exponential <- function(tm,a0_2,c0_2,beta0_2,beta1_2){
+  return((c0_2/log(10)-a0_2*tm/log(10)-beta0_2)/beta1_2);
+}
 
 # Plot 1: Ct values
 plot(data_one_noncensored_2$t, 
      data_one_noncensored_2$ct_value,
-     pch = 16, col = "darkblue",
-     xlab = "", ylab = "Ct Value",
-     main = "Raw Ct Values", ylim = rev(range(data_one_noncensored_2$ct_value)))
-
-# Plot 2: Estimated RNA concentrations
-plot(data_one_noncensored_2$t, RNA_c_2,
      pch = 16, col = "black",
-     xlab = "Days after Symptom Onset",
-     ylab = "Estimated RNA Concentration",
-     main = "Transformed Viral Load (from Ct)")
+     xlab = "", ylab = "Ct Value",
+     ylim = rev(range(data_one_noncensored_2$ct_value)))
+lines(x = c(5, 50), y = rep(censorlimit_2, 2), lty = 3, col = "black")
+graph.resp(color="black")
+legend("topright", legend=c("Quantifiable","Negative","Median","95% Credible Interval"), lty=c(NA,NA,1,3), pch=c(16,1,NA,NA), lwd=2, pt.cex=1)
+text(12,39.5,"Limit of Quantification")
+
+# # Plot 2: Estimated RNA concentrations
+# plot(data_one_noncensored_2$t, RNA_c_2,
+#      pch = 16, col = "black",
+#      xlab = "Days after Symptom Onset",
+#      ylab = "Estimated RNA Concentration",
+#      main = "Transformed Viral Load (from Ct)")
 
 
