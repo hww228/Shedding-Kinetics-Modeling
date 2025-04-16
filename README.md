@@ -24,3 +24,24 @@ Make sure you have R and the following packages installed first:
 ``` r
 install.packages(c("dplyr", "readxl", "rstan"))
 ```
+
+## Using pre-duilt Docker image
+
+We have built an image with Rstudio (with R version 4.4.3) and rstan. Users can use the following docker pull command:
+
+```
+docker pull ywan446/shedding-hub
+```
+
+and run the container with
+
+```
+docker run -e PASSWORD="<YOURPASSWORD>" -p 8787:8787 ywan446/shedding-hub:1.0
+```
+
+Then, users can go to "http://localhost:8787/" and type in 
+
+```
+USERNAME: rstudio
+PASSWORD: <YOURPASSWORD>
+```
