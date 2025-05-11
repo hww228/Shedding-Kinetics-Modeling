@@ -14,8 +14,10 @@ The model assumes that the RNA concentration on the log$_{10}$ scale decays expo
 
 -   code/reproducibility.R: Contains code to reproduce case 1: Single Subject without Censored Data 
 -   code/test.R: Contains code for testing data **kim2020viral**: Single Subject without Censored ct_value. 
--   code/test2.R: Contains code for testing data **wang2020fecal**: Treated as Single Subject without Censored ct_value. 
+-   code/SinglewoCensor_wang2020fecal.R: Contains code for testing data **wang2020fecal**: Treated as Single Subject without Censored ct_value. 
+-   code/CtViralcombo.R: Contains code for testing data **wang2020fecal** and **wolfel2020virological**: Treated as Multiple Subjects without Censored ct_value and viral load data. 
 -   models/expon1ct.stan: Contains the Stan model with ct_value.
+-   models/expon1_combined.stan: Contains the Stan model with both ct_value and viral load data.
 
 ## Prerequisites
 
