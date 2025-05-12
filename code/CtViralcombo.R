@@ -98,18 +98,17 @@ text(12, 39.5, "Limit of Quantification")
 # ───────────────────────────────────────────────────────────────────────────────
 # Ct_value transfer to Viral Load R plot 
 # ───────────────────────────────────────────────────────────────────────────────
-ct.vir_exponential <- function(beta0, beta1, ct) {
-  return(beta0 + beta1 * ct)
+ct.vir_exponential <- function(tm, a0,c0) {
+  return(c0/ log(10) - a0 * tm / log(10))
 }
 
 quant.resp.2 <- function(t) {
-  vals_ct <- (c0_combined / log(10) - a0_combined * t / log(10) - beta0_combined) / beta1_combined
-  vals_log10_viral <- beta0_combined + beta1_combined * vals_ct
-  return(quantile(vals_log10_viral, probs = c(0.025, 0.5, 0.975), na.rm = TRUE))
+  vals_ct <- ct.vir_exponential(t, a0_combined, c0_combined)
+  return(quantile(vals_ct, probs = c(0.025, 0.5, 0.975), na.rm = TRUE))
 }
 
 graph.resp.2 <- function(color = "black") {
-  x <- seq(from = 5, to = 50, by = 0.2)
+  x <- seq(from = 0, to = 50, by = 0.2)
   y <- array(NA, dim = c(length(x), 3))
   for (k in seq_along(x)) {
     y[k, ] <- quant.resp.2(x[k])
@@ -124,8 +123,10 @@ plot(data_multi_noncensored$t_obs_ct,
      pch = 16, col = "black",
      xlab = "Days After Symptom Onset",
      ylab = expression(log[10]*"(Viral Load from Ct)"),
+     xlim = c(0, 50),
+     ylim = c(0, 10),
      main = "Viral Load (Transformed from Ct)")
-lines(x = c(5, 50), y = rep(censorlimit_RNA_combined, 2), lty = 3, col = "black")
+lines(x = c(0, 50), y = rep(censorlimit_RNA_combined, 2), lty = 3, col = "black")
 graph.resp.2("black")
 
 legend("topright",
@@ -134,7 +135,7 @@ legend("topright",
        pch = c(16, 1, NA, NA),
        lwd = 2,
        pt.cex = 1)
-text(12, censorlimit_RNA_combined + 0.05, "Limit of Quantification")
+text(5, censorlimit_RNA_combined + 0.3, "Limit of Quantification")
 
 
 # ───────────────────────────────────────────────────────────────────────────────
@@ -147,10 +148,11 @@ plot(data_multi_noncensored$t_obs_viral,
      pch = 16, col = "black",
      xlab = "Days After Symptom Onset",
      ylab = expression(paste("Log"[10], " Viral Load (copies/mL)")),
+     xlim = c(0, 50),
      ylim = c(0, 10),
      main = "Viral Load Model Fit")
-lines(x = c(0, 30), y = rep(censorlimit_viral, 2), lty = 3, col = "black")
-graph.resp.1("red", model = "exp")
+lines(x = c(0, 50), y = rep(censorlimit_viral, 2), lty = 3, col = "black")
+graph.resp.2("red")
 legend("topright",
        legend = c("Quantifiable", "Negative", "Median", "95% Credible Interval"),
        lty = c(NA, NA, 1, 3),
@@ -179,7 +181,7 @@ lines(x = c(0, 50), y = rep(censorlimit_RNA_combined, 2), lty = 3, col = "black"
 points(data_multi_noncensored$t_obs_viral,
        data_multi_noncensored$c_obs_viral,
        pch = 16, col = "red")
-graph.resp.1("red", model = "exp")
+graph.resp.2("red")
 
 points(data_multi_noncensored$t_obs_ct,
        RNA_c_combined,
@@ -196,8 +198,8 @@ legend("topright",
        pt.cex = 1.2,
        cex = 0.8)
 
-text(5, censorlimit_viral + 0.2, "LOQ (Viral Load)", col = "red")
-text(5, censorlimit_RNA_combined + 0.2, "LOQ (Ct-derived)", col = "black")
+text(5, censorlimit_viral + 0.1, "LOQ (Viral Load)", col = "red", cex = 0.8)
+text(5, censorlimit_RNA_combined + 0.1, "LOQ (Ct-derived)", col = "black", cex = 0.8)
 
 
 
