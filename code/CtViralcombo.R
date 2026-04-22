@@ -232,7 +232,7 @@ ylim_all <- range(c(data_combined$c_obs, vl_ct_lo, vl_ct_hi,
                     data_combined$censlim, vl_loq_from_ct_med), na.rm = TRUE)
 ylim_modify <- c(-3,11)
 
-par(mgp = c(2.2, 0.8, 0)) 
+par(mgp = c(2.0, 0.8, 0)) 
 plot( 0, 0,
   type = "n",
   xlim = c(0, 50),
