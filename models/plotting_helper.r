@@ -147,3 +147,4 @@ ticks.logit <- function(ax,n.major,mintick,maxtick,...){
   minor.ticks <- minorpos[minorpos >= lims[1] & minorpos <= lims[2]]
   axis(ax,at=minor.ticks,tcl=par("tcl")*0.5,labels=FALSE,...) # show minor ticks
 }
+

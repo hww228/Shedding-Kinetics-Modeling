@@ -12,6 +12,8 @@ data_one_noncensored_rep <- list(
 )
 rm(ind) #remove the indicator;
 data_one_noncensored_rep
+library(rstan)
+source("./models/plotting_helper.R")
 fit_one_noncensored_rep <- stan(
   file = "./models/expon1.stan",  # Stan program
   data = data_one_noncensored_rep,    # named list of data
